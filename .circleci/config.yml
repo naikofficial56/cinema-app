@@ -11,9 +11,9 @@ jobs:
           name: Show current branch
           command: echo ${CURRENT_BRANCH}
       - restore_cache:
-          key: 
-            -app -{{ checksum "package.json" }}
-            -app-
+          keys: 
+            - app -{{ checksum "package.json" }}
+            - app-
       - run:
           name: Install dependencies
           command: npm install
@@ -84,7 +84,7 @@ jobs:
       - run:
           name: Deploy to AWS s3
           command:
-          aws configure set preview.cloudfront
+            aws configure set preview.cloudfront
             if [ "${CURRENT_BRANCH}" == "master" ]
             then
               aws cloudfront create-invalidation --distribution-id ${PRODUCTION_DISTRIBUTION_ID} --paths /\*
